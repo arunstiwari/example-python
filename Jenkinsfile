@@ -19,6 +19,9 @@ node('docker') {
     }
     stage('test') {
         pythonImage.inside {
+          sh """
+            pip install nose coverage nosexcover pylint
+          """
             sh '. /tmp/venv/bin/activate && python -m nosetests -sv --with-xunit --xunit-file=nosetests.xml --with-xcoverage --xcoverage-file=coverage.xml'
         }
     }
